@@ -1,8 +1,32 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+# Resources:
+- [Next.js (Latest Release 15.0.2)](https://nextjs.org/)
+- [Clerk | Authentication and User Management](https://clerk.com/)
+- [Clerk Documentation](https://clerk.com/docs)
+- [Prisma](https://www.prisma.io/)
+- [Prisma CRUD Operations](https://www.prisma.io/docs/orm/prisma-client/queries/crud)
+- [Supabase](https://supabase.com/)
+- [Supabase Database](https://supabase.com/docs/guides/database/overview)
+- [Best practice for instantiating Prisma Client with Next.js](https://www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextjs-prisma-client-dev-practices)
+- [Prisma | Works with Supabase](https://supabase.com/partners/integrations/prisma)
+- [Integrate Supabase with Clerk](https://clerk.com/docs/integrations/databases/supabase)
+- [Build your own sign-in and sign-up pages for your Next.js app with Clerk](https://clerk.com/docs/references/nextjs/custom-signup-signin-pages)
+- [Protect Routes using Clerk Middleware](https://clerk.com/docs/references/nextjs/clerk-middleware)
+- [Read session and user data in your Next.js app with Clerk](https://clerk.com/docs/references/nextjs/read-session-data)
+- [Deploy your Clerk app to production](https://clerk.com/docs/deployments/overview)
+- [Deploying a Clerk app to Vercel](https://clerk.com/docs/deployments/deploy-to-vercel)
+- [Hooks, useful helper methods for signing in and signing up (client-side-helpers)](https://clerk.com/docs/references/nextjs/overview#client-side-helpers)
+
 ## Getting Started
 
-First, run the development server:
+### Installation
+
+Install node_modules:
+
+`npm install`
+
+Run the development server:
 
 ```bash
 npm run dev
