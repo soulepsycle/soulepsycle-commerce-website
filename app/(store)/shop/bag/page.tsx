@@ -26,7 +26,7 @@ export default function BagPage() {
 			size: "M",
 			price: 29.99,
 			quantity: 2,
-			image: "/placeholder.svg?height=200&width=200&text=T-Shirt",
+			image: "/placeholder-dark-image.png",
 		},
 		{
 			id: "2",
@@ -35,7 +35,7 @@ export default function BagPage() {
 			size: "32",
 			price: 59.99,
 			quantity: 1,
-			image: "/placeholder.svg?height=200&width=200&text=Jeans",
+			image: "/placeholder-dark-image.png",
 		},
 	]);
 
