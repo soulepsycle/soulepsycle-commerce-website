@@ -17,9 +17,27 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import {
+	SignedIn,
+	SignedOut,
+	SignInButton,
+	UserButton,
+	useUser,
+} from "@clerk/nextjs";
 
 const StoreNavbar = () => {
 	const pathname = usePathname();
+
+	const { isLoaded, isSignedIn, user } = useUser();
+
+	const isAdmin =
+		user?.emailAddresses[0].emailAddress === "soulepsycle1201@gmail.com";
+
+	if (!isLoaded || !isSignedIn) {
+		return null;
+	}
+
+	console.log("user", user)
 
 	const links = [
 		{
@@ -31,11 +49,6 @@ const StoreNavbar = () => {
 			href: "/shop",
 			label: "Shop",
 			active: pathname === "/shop",
-		},
-		{
-			href: "/admin",
-			label: "Admin Panel",
-			active: pathname === "/admin",
 		},
 	];
 
@@ -50,7 +63,7 @@ const StoreNavbar = () => {
 					/>
 					<span className="font-bold">SoulePsycle</span>
 				</Link>
-				<nav className="mx-6 flex items-center space-x-4 lg:space-x-6 hidden md:block">
+				<nav className="mx-6 items-center space-x-4 lg:space-x-6 hidden md:flex">
 					{links.map((link) => {
 						const { href, label, active } = link;
 
@@ -64,6 +77,11 @@ const StoreNavbar = () => {
 							</Button>
 						);
 					})}
+					{isAdmin && (
+						<Button asChild variant={"ghost"}>
+							<Link href={"/admin"}>Admin Panel</Link>
+						</Button>
+					)}
 				</nav>
 				<div className="flex items-center space-x-4 ml-auto">
 					<Button
@@ -79,6 +97,16 @@ const StoreNavbar = () => {
 							</span>
 						</Link>
 					</Button>
+
+					{/* Clerk Avatar | Sign In/Up */}
+					<div>
+						<SignedOut>
+							<SignInButton />
+						</SignedOut>
+						<SignedIn>
+							<UserButton />
+						</SignedIn>
+					</div>
 
 					{/* Mobile Viewing Navbar */}
 					<Sheet>
@@ -105,12 +133,11 @@ const StoreNavbar = () => {
 										<Button
 											key={href}
 											asChild
-											variant={
-												active ? "link" : "ghost"
-											}
+											variant={active ? "link" : "ghost"}
 											className={cn(
 												"w-fit text-lg",
-												active && "underline underline-offset-4"
+												active &&
+													"underline underline-offset-4"
 											)}
 										>
 											<Link href={href}>{label}</Link>
