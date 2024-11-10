@@ -37,6 +37,8 @@ const StoreNavbar = () => {
 		return null;
 	}
 
+	console.log("user", user)
+
 	const links = [
 		{
 			href: "/",
