@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { LayoutDashboard, Package, ShoppingCart, Users } from "lucide-react";
 import {
@@ -22,8 +21,6 @@ const sidebarItems = [
 ];
 
 export default function AdminPanel() {
-	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
 	const { isLoaded, isSignedIn, user } = useUser();
 
 	const isAdmin =
@@ -34,11 +31,14 @@ export default function AdminPanel() {
 			<main className="h-screen flex items-center justify-center">
 				<div className="flex flex-col gap-4">
 					<p>You are not authorized to access this page.</p>
-          <Button variant={'default'} asChild>
-            <Link href={'/'} className="underline underline-offset-4">
-              Go back to home page
-            </Link>
-          </Button>
+					<Button variant={"default"} asChild>
+						<Link
+							href={"/"}
+							className="underline underline-offset-4"
+						>
+							Go back to home page
+						</Link>
+					</Button>
 				</div>
 			</main>
 		);
@@ -52,9 +52,7 @@ export default function AdminPanel() {
 		<div className="flex h-screen bg-gray-100">
 			{/* Sidebar */}
 			<aside
-				className={`${
-					isSidebarOpen ? "w-16" : "w-0"
-				} bg-gray-800 text-white transition-all duration-300 ease-in-out overflow-hidden`}
+				className={`w-16 bg-gray-800 text-white transition-all duration-300 ease-in-out overflow-hidden`}
 			>
 				<nav className="flex flex-col h-full">
 					<div className="flex items-center justify-center mt-2">

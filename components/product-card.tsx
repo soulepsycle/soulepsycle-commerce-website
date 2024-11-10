@@ -1,12 +1,13 @@
 import React from "react";
 import { Button } from "./ui/button";
+import Image from "next/image";
 
 const ProductCard = () => {
 	return (
 		<div
 			className="group relative overflow-hidden rounded-lg shadow-lg"
 		>
-			<img
+			<Image
 				src={`/placeholder.svg`}
 				alt={`Product`}
 				className="object-cover w-full h-[300px] transition-transform group-hover:scale-105"
