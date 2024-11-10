@@ -1,10 +1,17 @@
 "use client";
 
+import React from "react";
 import {
 	ColumnDef,
+	ColumnFiltersState,
 	flexRender,
 	getCoreRowModel,
+	getFilteredRowModel,
+	getPaginationRowModel,
+	getSortedRowModel,
+	SortingState,
 	useReactTable,
+	VisibilityState,
 } from "@tanstack/react-table";
 
 import {
@@ -17,7 +24,10 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { DataTableViewOptions } from "@/components/ui/data-table-view-options";
+import { DataTablePagination } from "@/components/ui/data-table-pagination";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -28,15 +38,53 @@ export function DataTable<TData, TValue>({
 	columns,
 	data,
 }: DataTableProps<TData, TValue>) {
+	const [sorting, setSorting] = React.useState<SortingState>([]);
+	const [columnFilters, setColumnFilters] =
+		React.useState<ColumnFiltersState>([]);
+	const [columnVisibility, setColumnVisibility] =
+		React.useState<VisibilityState>({});
+
 	const table = useReactTable({
 		data,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		onSortingChange: setSorting,
+		getSortedRowModel: getSortedRowModel(),
+		onColumnFiltersChange: setColumnFilters,
+		getFilteredRowModel: getFilteredRowModel(),
+		onColumnVisibilityChange: setColumnVisibility,
+
+		state: {
+			sorting,
+			columnFilters,
+			columnVisibility,
+		},
 	});
 
 	return (
 		<>
-			<div className="flex justify-end mb-4">
+			<div className="flex items-center justify-end gap-4 mb-4">
+				<DataTableViewOptions table={table} />
+
+				{/* Search by ?? */}
+				<div className="relative flex items-center py-4">
+					<Input
+						placeholder="Filter emails..."
+						value={
+							(table
+								.getColumn("email")
+								?.getFilterValue() as string) ?? ""
+						}
+						onChange={(event) =>
+							table
+								.getColumn("email")
+								?.setFilterValue(event.target.value)
+						}
+						className="max-w-sm bg-white pl-8"
+					/>
+					<Search className="w-4 h-4 absolute left-3" />
+				</div>
 				<Button asChild>
 					<Link href={`/admin/inventory/create`}>
 						<PlusCircle className="w-4 h-4" />
@@ -44,8 +92,8 @@ export function DataTable<TData, TValue>({
 					</Link>
 				</Button>
 			</div>
-            
-			<div className="bg-white rounded-md border">
+
+			<div className="bg-white rounded-md border mb-4">
 				<Table>
 					<TableHeader className="w-full">
 						{table.getHeaderGroups().map((headerGroup) => (
@@ -101,6 +149,9 @@ export function DataTable<TData, TValue>({
 					</TableBody>
 				</Table>
 			</div>
+
+			{/* Pagination */}
+			<DataTablePagination table={table} />
 		</>
 	);
 }

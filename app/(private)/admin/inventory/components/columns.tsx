@@ -12,6 +12,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -33,8 +34,8 @@ export const columns: ColumnDef<Payment>[] = [
 	},
 	{
 		accessorKey: "email",
-		header: () => (
-			<div className="text-lg text-gray-900 font-semibold">Email</div>
+		header: ({column}) => (
+			<DataTableColumnHeader column={column} title="Email" />
 		),
 	},
 	{
