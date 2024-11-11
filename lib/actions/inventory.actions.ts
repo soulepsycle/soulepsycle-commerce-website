@@ -107,3 +107,84 @@ export async function createDummyProducts() {
 		console.log("Error creating dummy products", error);
 	}
 }
+
+export async function createProduct() {
+    try {
+        await prisma.product.create({
+            data: {
+                name: 'Test Product',
+                slug: 'test-product',
+                price: 99.99,
+                sku: 'TEST-001',
+                category_id: '9cf60350-8f59-4569-a20a-d85fd9b09564',
+                description: 'Test product description',
+                ProductVariantColor: {
+                    create: [
+                        {
+                            color: 'Black',
+                            images: ['image-1.jpg'],
+                            ProductVariantSize: {
+                                create: [
+                                    {
+                                        size: 'S',
+                                        stock: 100,
+                                        status: 'Active',
+                                    },
+                                    {
+                                        size: 'L',
+                                        stock: 100,
+                                        status: 'Active',
+                                    },
+                                ]
+                            }
+                        },
+                        {
+                            color: 'Red',
+                            images: ['image-2.jpg'],
+                            ProductVariantSize: {
+                                create: [
+                                    {
+                                        size: 'M',
+                                        stock: 120,
+                                        status: 'Active',
+                                    },
+                                    {
+                                        size: 'L',
+                                        stock: 120,
+                                        status: 'Active',
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        })
+    } catch (error) {
+		if (error instanceof z.ZodError) {
+			console.log("Error creating a product [ZOD_ERROR]", error);
+		}
+		console.log("Error creating a product", error);
+	}
+}
+
+export async function getProducts() {
+    try {
+        const products = await prisma.product.findMany({
+            include: {
+                ProductVariantColor: {
+                    include: {
+                        ProductVariantSize: true
+                    }
+                }
+            }
+        });
+
+        return products;
+    } catch (error) {
+        if (error instanceof z.ZodError) {
+            console.log("Error getting products [ZOD_ERROR]", error);
+        }
+        console.log("Error getting products", error);
+    }
+}
