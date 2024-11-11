@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import axios from "axios";
 import {
 	ColumnDef,
 	ColumnFiltersState,
@@ -28,6 +29,7 @@ import { PlusCircle, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { DataTableViewOptions } from "@/components/ui/data-table-view-options";
 import { DataTablePagination } from "@/components/ui/data-table-pagination";
+import toast from "react-hot-toast";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -85,6 +87,24 @@ export function DataTable<TData, TValue>({
 					/>
 					<Search className="w-4 h-4 absolute left-3" />
 				</div>
+
+				<Button
+					variant={"destructive"}
+					onClick={async () => {
+						try {
+							await axios.post(
+								"/api/inventory/dummy-products"
+							);
+							toast.success('Dummy Products Successfully Seeds')
+						} catch (err) {
+							console.log(err);
+							toast.error('Dummy Products Failed to Seeds')
+						}
+					}}
+				>
+					Create Dummy Products
+				</Button>
+
 				<Button asChild>
 					<Link href={`/admin/inventory/create`}>
 						<PlusCircle className="w-4 h-4" />
